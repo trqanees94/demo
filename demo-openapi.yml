@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: KYC API Documentation
+  description: The Know Your Customer API
+  version: 0.1.9
+
+paths:
+  /kycresult/{token}:
+    get:
+      summary: Returns a KYC Result.
+      description: Allows the client to view the KYC result
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+          description: The user ID
+      responses:
+        '200':    # status code
+          description: A JSON object of KYC Result
+          content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                    user_token:
+                      type: string
+                    kyc_result:
+                      type: string
+        '404':    # status code
+          description: Object Not Found
+    put:
+      summary: Updates a KYC Result.
+      description: Allows the client to update the KYC result
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+          description: The user ID
+      responses:
+        '200':
+          description: A JSON object of KYC Result
+          content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                    user_token:
+                      type: string
+                    kyc_result:
+                      type: string
+    delete:
+      summary: Delete a KYC Result from the mysql database
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+          description: The user ID
+      responses:
+          '200':    # status code
+            description: KYC Result deleted
+          '404':    # status code
+            description: Object Not Found
+          
+      
+          
+  /kycresult:
+    post:
+      summary: Performs a KYC evaluation upon a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_token:
+                  type: string
+              required:
+                - user_token
+      responses:
+        '200':    # status code
+          description: A JSON object of KYC Result
+          content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                    user_token:
+                      type: string
+                    kyc_result:
+                      type: string
